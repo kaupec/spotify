@@ -6,7 +6,7 @@ use App\Repository\AnalyticsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnalyticsRepository::class)]
-class src/Entity/Analytics.phpAnalytics
+class Analytics
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -15,7 +15,7 @@ class src/Entity/Analytics.phpAnalytics
 
     #[ORM\ManyToOne(inversedBy: 'analytics')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Song $song_id = null;
+    private ?Song $song = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
@@ -25,14 +25,14 @@ class src/Entity/Analytics.phpAnalytics
         return $this->id;
     }
 
-    public function getSongId(): ?Song
+    public function getSong(): ?Song
     {
-        return $this->song_id;
+        return $this->song;
     }
 
-    public function setSongId(?Song $song_id): static
+    public function setSong(?Song $song): static
     {
-        $this->song_id = $song_id;
+        $this->song = $song;
 
         return $this;
     }
