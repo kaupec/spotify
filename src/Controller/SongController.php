@@ -9,8 +9,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use JetBrains\PhpStorm\NoReturn;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,6 +28,12 @@ class SongController extends AbstractController
             $query = $form->getData();
             if ($query && is_string($query) && $query !== "") {
                 $song = $songRepository->findOneByName($query);
+            }
+
+            if ($song === null) {
+                $this->addFlash('error', 'Oups, aucune chanson trouvée');
+
+                return $this->redirectToRoute('app_song');
             }
 
             return $this->render('song/show.html.twig', [

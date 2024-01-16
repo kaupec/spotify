@@ -10,14 +10,23 @@
 
 <div class="example-wrapper">
 
+    <a href="{{ path('app_analytics') }}">
+        See Analytics
+    </a>
+
     <h1>Songs</h1>
     <ul>
         {% for song in songs %}
             <li>{{ song.name }}</li>
         {% endfor %}
     </ul>
-</div>
+
+    <h1>Search</h1>
     {{ form(form) }}
+</div>
+
+
+
 
 
 {% endblock %}
