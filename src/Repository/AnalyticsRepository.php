@@ -21,6 +21,17 @@ class AnalyticsRepository extends ServiceEntityRepository
         parent::__construct($registry, Analytics::class);
     }
 
+    public function selectCountPlayBySong(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->select('song.name, COUNT(a) as count')
+            ->join('a.song', 'song')
+            ->groupBy('a.song')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Analytics[] Returns an array of Analytics objects
 //     */
