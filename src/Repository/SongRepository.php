@@ -1,4 +1,4 @@
-src/Repository/SongRepository.php<?php
+<?php
 
 namespace App\Repository;
 
@@ -19,6 +19,20 @@ class SongRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Song::class);
+    }
+
+    public function findOneByName(string $query): ?Song
+    {
+        $qb = $this->createQueryBuilder('s');
+        $qb
+            ->where(
+                        $qb->expr()->like('s.name', ':query'),
+            )
+            ->setParameter('query', '%' . $query . '%')
+        ;
+        return $qb
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 //    /**
